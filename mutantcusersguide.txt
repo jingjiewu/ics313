@@ -63,6 +63,21 @@ GAME COMMANDS - FOR FLOOR 2 ONLY
 
 GAME COMMANDS - FOR FLOOR 3 ONLY
 
+COMBINE key-sword-left key-sword-right 
+when used in floor-3-lobby combine the pieces into a sword key
+
+SLAY key-sword fortran-mutant
+when you have the combines key sword and used in floor-3-lobby, allows you to change fortran mutant into a Lisp Programmer
+
+DEFEAT game-system ada-mutant
+when used in game-room allows you to change ada mutant into a Lisp Programmer
+
+DISARM trap-tools python-mutant
+when used in trap-room allows you to change python mutant into a Lisp Programmer
+
+WIN super-power-up
+when used in death-room allows you to change C++ mutant into a Lisp Programmer
+
 --------------------------------
 
 GAME COMMANDS - FOR FLOOR 4 ONLY
