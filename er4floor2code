@@ -1,34 +1,35 @@
 (new-location 'hallway '(you are in the petrology hallway. it is everything you expect out of a petrology floor. nothing.))
 
-(new-location 'laboratory '(you are in the petrology hallway. there are many computers, machines, and scientific instruments in this room. in the center of the lab is a machine with three spots to put things: a red-slot, a blue-slot, and a gray-slot.))
+(new-location 'laboratory '(you are in the petrology hallway. there are many computers machines and scientific instruments in this room. in the center of the lab is a machine with three spots to put things- a red-slot a blue-slot and a gray-slot.))
 
-(new-location 'specimen-room '(you are in the petrology specimen room. there are many rocks in this room of many diffrent colors, shapes and sizes. oh god, there are too many of them! they are all looking at me! oh no, i'm surrounded! tell me wife and children i love them! is what you read on a sign.))
+(new-location 'specimen-room '(you are in the petrology specimen room. there are many rocks in this room of many diffrent colors shapes and sizes. oh god- there are too many of them! they are all looking at me! oh no i'm surrounded! tell me wife and children i love them! is what you read on a sign.))
 
 (new-location 'display-room '(you are in the petrology display room. there are many normal looking rocks in glasses cases. this main display is a gigantic boulder that looks like it weighs several tons.))
 
 ;;variable for messages, message depends of order visited
-(new-location (bathroom (you are in a bathroom. there isn't anything special about this room)))
-(new-location (other-bathroom (you are in another bathroom. you have the feeling that there is something off with this room)))
-(new-location (other-other-bathroom (you are in the third bathroom. enough with the bathrooms already! isn't this the petrology floor?! who's idea was it to have three bathrooms?!)))
+(new-location 'bathroom '(you are in a bathroom. there isnt anything special about this room))
+(new-location 'other-bathroom '(you are in another bathroom. you have the feeling that there is something off with this room))
+(new-location 'other-other-bathroom '(you are in the third bathroom. enough with the bathrooms already! isnt this the petrology floor?! whose idea was it to have three bathrooms?!))
 
 ;;not in macro specics but just need quik edits and pastes.
-(new-path laboratory specimen-room north door))
-(new-path laboratory hallway west door))
-(new-path hallway laboratory north-east door))
-(new-path hallway display-room north door))
-(new-path hallway bathroom west door))
-(new-path hallway other-bathroom east door))
-(new-path hallway other-other-bathroom north-west door))
-(new-path hallway elevator south door))
-(new-path specimen-room laboratory south door))
-(new-path specimen-room display-room west door))
-(new-path display-room hallway south door))
-(new-path bathroom hallway east door))
-(new-path other-bathroom hallway west door))
-(new-path other-other-bathroom hallway east door))
-(new-path elevator hallway floor-2 door))
+(new-path 'laboratory 'specimen-room 'north 'door)
+(new-path 'laboratory 'hallway 'west 'door)
+(new-path 'hallway (laboratory north-east door)
+                   (display-room north door)
+                   (bathroom west door)
+                   (other-bathroom east door)
+                   (other-other-bathroom north-west door)
+                   (elevator south door)))
+(new-path 'specimen-room (laboratory)
+                         (hallway)))
+(new-path 'display-room (laboratory)
+                        (hallway)))
+(new-path 'bathroom (hallway east door)))
+(new-path 'other-bathroom (hallway east door)))
+(new-path 'other-other-bathroom (hallway west door)))
+(new-path 'elevator (hallway floor-2 door)))
 
-(new-object red-rock display-room)
+(new-object 'red-rock 'display-room)
 (new-object blue-rock display-room)
 (new-object gray-rock specimen-room)
 (new-object beaker laboratory)
@@ -46,7 +47,7 @@
 (defparameter *floor-done* nil)
 
 ;;remove rock from inventory
-(defun place (item slot)
+(defun place (item slot loc)
   (cond ((and (eq item 'red-rock) (eq slot 'red-slot) (eq loc 'laboratory) (have 'red-rock) (not (*red-placed*)))
          (progn (setq *red-placed* 't) '(the red-rock fits perfectly!)))
         ((and (eq item 'blue-rock) (eq slot 'blue-slot) (eq loc 'laboratory) (have 'blue-rock) (not (*blue-placed*)))
@@ -56,7 +57,7 @@
         (t
          '(the rock machine stares at you as if you were stupid.))))
           
-(defun fill (item)
+(defun fill (item obj)
   (cond ((and (eq item 'beaker) (have 'beaker) (eq *beaker-state* 0) (eq *location* 'bathroom))
          (progn (setq *beaker-state* 1) '(the beaker is now filled with cold water.)))
         ((and (eq item 'beaker) (have 'beaker) (eq *beaker-state* 0) (eq *location* 'other-bathroom))
