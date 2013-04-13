@@ -1,0 +1,77 @@
+Mutant C - A Lisp Game - User's Guide
+
+To begin playing Mutant C you must first have a program to load, compile, and execute .lisp files.  Please visit: http://www2.hawaii.edu/~nreed/ics313/lisp/index.html and http://www2.hawaii.edu/~nreed/ics313/help/ for detailed instructions.
+
+To begin, load the mulleadyjrybarsanpeier46.lisp file.
+Type "(game-repl)".
+You are now inside the Mutant C game repl!
+Now, you can play Mutant C!
+
+WELCOME!
+You are in a Corrupt Programming Tower on a secret island, far out into sea, with a storm brewing with thunder and lightning!  Ahhh!  There are Mutant-Non-Lisp Programmers everywhere!  You need to collect items throughout this treacherous tower to turn the Mutant Programmers into Wonderful Lisp Programmers!
+
+Simply type in the commands you wish to use!
+And remember, you must change all the mutants into Lisp Programmers and complete all the objectives on your current floor before you are able to move up to the next floor!  The game is complete once you have changed all the mutants, completed all the objectives, and changed the ultimate C Mutant into a wonderful Lisper!
+
+--------------------------------
+
+GAME COMMANDS - FOR ENTIRE GAME
+You can type in a command to perform an action like "LOOK".  Some commands require more information like "WALK direction".  When you see a command like this, that means there are different options for "direction" and you must specify which option you would like to choose.
+
+LOOK
+Describes what location you are in, who or what is in your current location, and what pathways are connected to your current location.
+
+WALK direction
+Allows you to move to a new location by specifiying an available direction (i.e. south).
+
+INVENTORY
+Lists the objects currently in your inventory.
+
+PICKUP item
+Allows you to pickup an available item in your current location by specifying an available item (i.e. cup-of-coffee).
+
+HAVE object
+Tells you if you currently have the specified object in your inventory (i.e. script).
+
+HELP
+Prints out a help menu.
+
+QUIT
+Allows you to exit the game. Does not save your game.
+
+--------------------------------
+
+GAME COMMANDS - FOR FLOOR 1 ONLY
+
+CAFFEINATE cup-of-coffee redbull-energy-drink virtual-machine
+When used in the Floor 1 Lobby, allows you to change the Over-caffeinated Java Mutant into a Lisp Programmer!
+
+UNTANGLE head-opening-tag head-closing-tag jump-rope spider
+When used in the Web Room, allows you to change the Hyper Html Mutant into a Lisp Programmer!
+
+SHARPEN dot-net-framework samurai-sword c-sharp-music-note
+When used in the Japanese Warfare Room, allows you to change the Ninja C# Mutant into a Lisp Programmer!
+
+QUERY select-statement from-statement where-statement relational-database-management-system
+When used in the Interrogation Room, allows you to change the Inquisitive SQL Mutant into a Lisp Programmer!
+
+--------------------------------
+
+GAME COMMANDS - FOR FLOOR 2 ONLY
+
+--------------------------------
+
+GAME COMMANDS - FOR FLOOR 3 ONLY
+
+--------------------------------
+
+GAME COMMANDS - FOR FLOOR 4 ONLY
+
+SHOW objective-c-monster lisp-phone
+When used in the Objective Room, allows you to change the Objective C Monster into a Lisp Programmer!
+
+UNSCRIPTIFY php-monster scripts
+When used in the Acting Room, allows you to change the PHP Monster into a Lisp Programmer!
+
+CONVERT c-mutant
+When used in the Theater, allows you to change the C Mutant into a Lisp Programmer!
