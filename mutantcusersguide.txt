@@ -24,7 +24,7 @@ Describes what location you are in, who or what is in your current location, and
 WALK direction
 Allows you to move to a new location by specifiying an available direction (i.e. south).
 
-INVENTORY
+INVENTORY 
 Lists the objects currently in your inventory.
 
 PICKUP item
