@@ -4,36 +4,36 @@
 
 (defparameter *close-parentheses* 0)
 
-(defparameter *nodes* '((elevator-3 (you are in the elevator on the third floor.
-                                  you can choose another floor or enter the lobby in front of you.))
+(defparameter *nodes* '((elevator (you are in the elevator on the third floor.
+                                       you can choose another floor or enter the lobby in front of you.))
                         (floor-3-lobby (you are in the floor-3-lobby.
-                                  there are two rooms in front of you.
-                                  simply find the sword-key pieces to kill the fortran mutant and enter a room of your choice. ))
+                                            there are two rooms in front of you.
+                                            simply find the sword-key pieces to kill the fortran mutant and enter a room of your choice. ))
                         (game-room (welcome to the game-room can you defeat the ada mutant and advance.
-                                  this may require items from other rooms. ))
+                                            this may require items from other rooms. ))
                         (trap-room (welcome to the trap-room can you avoid the traps defeat the python mutant and advance.
-                                  this may require items from other rooms. ))
+                                            this may require items from other rooms. ))
                         (death-room (welcome to the final room on this floor. 
-                                  the death-room houses one of the most dangerous mutants.
-                                  i hope you are prepared for the c++ mutant. ))))
+                                             the death-room houses one of the most dangerous mutants.
+                                             i hope you are prepared for the c++ mutant. ))))
 
 (defun describe-location (location nodes)
    (cadr (assoc location nodes)))
 
-(defparameter *edges* '((elevator-3 (floor-3-lobby front door))
+(defparameter *edges* '((elevator (floor-3-lobby front door))
                         (floor-3-lobby (game-room front-left door)
-                                (trap-room front-right door))
+                                       (trap-room front-right door))
                         (game-room (floor-3-lobby back door)
-                                (death-room front door)
-                                (trap-room right door))
+                                   (death-room front door)
+                                   (trap-room right door))
                         (trap-room (floor-3-lobby back door)
-                                (death-room front door)
-                                (game-room left door))
+                                   (death-room front door)
+                                   (game-room left door))
                         (death-room (game-room back-left door)
-                                (trap-room back-right door))))
+                                    (trap-room back-right door))))
 
 (defun describe-path (edge)
-  `(there is a ,(caddr edge) going ,(cadr edge) from here.))
+  `(there is a ,(caddr edge) to the ,(cadr edge) front here.))
 
 (defun describe-paths (location edges)
   (apply #'append (mapcar #'describe-path (cdr (assoc location edges)))))
@@ -137,15 +137,41 @@ with 'body. If not, it tells the user of the invalid request."
     (princ (coerce (tweak-text (coerce (string-trim "() " (prin1-to-string lst)) 'list) t nil) 'string))
     (fresh-line))
 
+(defmacro new-location (name &body body)
+  `(cond
+   ((not (our-member ',name *nodes*))
+    (pushnew '(,name (,@body)) *nodes*))
+   (t "Location already exists")))
+
+(defmacro new-path (origin destination direction path &optional (direction-back "unable"))
+  `(cond
+    ((or                                         
+      (not (our-member ',origin *nodes*))                                      
+      (not (our-member ',destination *nodes*)))
+     ()"Missing location, cannot create path.")                                 
+    (t(progn
+        (if (equal ',direction-back "unable")
+            nil    
+          (cond
+           ((our-member ',destination *edges*)
+            (pushnew '(,origin ,direction-back ,path)
+                 (cdr (assoc ',destination *edges*))))
+           (t (pushnew '(,destination
+                          (,origin ,direction-back ,path)) *edges*))))        
+        (pushnew '(,destination ,direction ,path)
+                 (cdr (assoc ',origin *edges*)))))))
+
 (defmacro game-action (command subj obj place &body body)
-  `(progn (defun ,command (subject object)  
-            (if (and (eq *location* ',place)  
+
+  `(progn (defun ,command (subject object)	
+            (if (and (eq *location* ',place)	
                      (eq subject ',subj)	
-                     (eq object ',obj)		
-                     (have ',subj))		
-                     ,@body			
-                     '(i cant ,command like that.)))
-                     (pushnew ',command *allowed-commands*)))
+                     (eq object ',obj)	
+                     (have ',subj))	
+                ,@body			
+            '(i cant ,command like that.)))	
+          (pushnew ',command *allowed-commands*))) 
+
 
 (defparameter *key-sword* nil)
 
@@ -155,25 +181,25 @@ with 'body. If not, it tells the user of the invalid request."
                         '(the key-sword is now combined))
                '(you do not have a piece.)))
 
-(game-action slay key-sword fortran-mutant floor-3-lobby
+(game-action slay super-armor key-sword floor-3-lobby
              (cond ((not *key-sword*) '(you do not have combined key-sword))
                    (t '(you have slain the fortran-mutant.
                             his shell has fallen and now become a lisp programmer.
                             can you defeat the other mutants on this floor))))
 
-(game-action defeat game-system ada-mutant game-room
+(game-action defeat game-system atari-code game-room
              (cond ((not (have 'atari-code)) '(you do not have the items to win))
                    ((not (have 'game-system)) '(you do not have the items to win))
                    (t '(you have entered the atari-code and defeated the ada-mutants game.
                             he has now changed to a lisp programmer ))))
 
-(game-action disarm trap-tools python-mutant trap-room
+(game-action disarm trap-tools precision-gloves trap-room
              (cond ((not (have 'trap-tools)) '(you do not have the items to win))
                    ((not (have 'precision-gloves)) '(you do not have the items to win))
                    (t '(you have entered disarmed the python-mutants trap and activated it on him.
                             he has now become a lisp programmer))))
 
-(game-action win super-power-up death-room
+(game-action win super-power-up key-sword death-room
              (cond ((not (have 'super-power-up)) '(you do not have the items to win))
                    ((not (have 'super-shield)) '(you do not have the items to win))
                    ((not (have 'super-armor)) '(you do not have the items to win))
